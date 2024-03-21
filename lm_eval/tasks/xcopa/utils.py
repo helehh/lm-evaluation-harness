@@ -11,12 +11,26 @@ def doc_to_text(doc, connector):
     return doc["premise"].strip()[:-1] + f" {conn}"
 
 
+def doc_to_text_llama(doc, connector):
+    # Drop the period
+    conn = connector[doc["question"]]
+    return "[INST]" + " " + doc["premise"].strip()[:-1] + f" {conn}" + " " + "[/INST]"
+
+
 def doc_to_choice(doc):
     return [convert_choice(doc["choice1"]), convert_choice(doc["choice2"])]
 
 
 doc_to_text_et = partial(
     doc_to_text,
+    connector={
+        "cause": "sest",
+        "effect": "seetõttu",
+    },
+)
+
+doc_to_text_et_llama = partial(
+    doc_to_text_llama,
     connector={
         "cause": "sest",
         "effect": "seetõttu",

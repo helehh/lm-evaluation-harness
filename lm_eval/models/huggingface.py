@@ -109,6 +109,8 @@ class HFLM(TemplateLM):
         # PEFT and quantization options
         peft: Optional[str] = None,
         autogptq: Optional[Union[bool, str]] = False,
+        is_chat_model: Optional[bool] = False, 
+        apply_template: Optional[bool] = False, 
         prefix_token_id: Optional[int] = None,
         **kwargs,
     ) -> None:
@@ -340,6 +342,9 @@ class HFLM(TemplateLM):
             )
             self._rank = 0
             self._world_size = 1
+            
+        self.is_chat_model = is_chat_model
+        self.apply_template = apply_template  
 
         self.custom_prefix_token_id = prefix_token_id
         eval_logger.info(
@@ -681,7 +686,7 @@ class HFLM(TemplateLM):
         """ """
         if add_special_tokens is None:
             if self.AUTO_MODEL_CLASS == transformers.AutoModelForCausalLM:
-                add_special_tokens = False or self.add_bos_token
+                add_special_tokens = False or self.add_bos_token or self.is_chat_model
             elif self.AUTO_MODEL_CLASS == transformers.AutoModelForSeq2SeqLM:
                 # TODO: investigate best practices for enc-dec models + special tokens
                 add_special_tokens = True
@@ -691,6 +696,10 @@ class HFLM(TemplateLM):
         # left-truncate the encoded context to be at most `left_truncate_len` tokens long
         if left_truncate_len:
             encoding = encoding[-left_truncate_len:]
+
+        tmp = " ".join(self.tokenizer.convert_ids_to_tokens(encoding))
+
+        eval_logger.debug(f"Encoded input: {tmp}")
 
         return encoding
 
@@ -706,7 +715,7 @@ class HFLM(TemplateLM):
         self.tokenizer.padding_side = padding_side
 
         if self.AUTO_MODEL_CLASS == transformers.AutoModelForCausalLM:
-            add_special_tokens = False or self.add_bos_token
+            add_special_tokens = False or self.add_bos_token or self.is_chat_model
         elif self.AUTO_MODEL_CLASS == transformers.AutoModelForSeq2SeqLM:
             add_special_tokens = True
 
@@ -723,6 +732,17 @@ class HFLM(TemplateLM):
                 :, -left_truncate_len:
             ]
         self.tokenizer.padding_side = old_padding_side
+
+        eval_logger.debug(f"Encoded items: {len(encoding['input_ids'])}")
+
+        tmp = " ".join(self.tokenizer.convert_ids_to_tokens(encoding["input_ids"][0]))
+
+        eval_logger.debug(f"Encoded input: {tmp}")
+
+        if len(encoding['input_ids']) > 1:
+            tmp = " ".join(self.tokenizer.convert_ids_to_tokens(encoding["input_ids"][1]))
+
+            eval_logger.debug(f"2nd encoded input: {tmp}")
 
         return encoding["input_ids"], encoding["attention_mask"]
 

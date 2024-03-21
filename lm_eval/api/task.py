@@ -941,13 +941,15 @@ class ConfigurableTask(Task):
             The fewshot context.
         """
         if description := self.config.description:
-            description = utils.apply_template(self.config.description, doc)
+            description = "[INST]" + " " + utils.apply_template(self.config.description, doc)
 
         if num_fewshot == 0:
             # always prepend the (possibly empty) task description
             labeled_examples = description
         else:
-            labeled_examples = description + self.sampler.get_context(doc, num_fewshot)
+            context = self.sampler.get_context(doc, num_fewshot)
+            context = context.replace(" [/INST]", "")
+            labeled_examples = description + context
 
         example = self.doc_to_text(doc)
         if self.multiple_input:

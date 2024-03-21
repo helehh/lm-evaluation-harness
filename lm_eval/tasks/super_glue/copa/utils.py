@@ -11,6 +11,15 @@ def doc_to_text(doc):
     return doc["premise"].strip()[:-1] + f" {connector}"
 
 
+def doc_to_text_llama(doc):
+    # Drop the period
+    connector = {
+        "cause": "because",
+        "effect": "therefore",
+    }[doc["question"]]
+    return "[INST]" + " " + doc["premise"].strip()[:-1] + f" {connector}" + "[/INST]"
+
+
 def doc_to_target(doc):
     correct_choice = doc["choice1"] if doc["label"] == 0 else doc["choice2"]
     # Connect the sentences
