@@ -183,10 +183,35 @@ class ManualSampler(ContextSampler):
         """ """
         pass
 
+class CauseEffectFirstNSampler(ContextSampler):
+    def sample(self, n) -> None:
+        """
+        This is only meant for COPA task.
+        Draw the first n samples from the dataset so that the samples alternate between cause and effect.
+        """
+        cause_samples = [doc for doc in self.docs if doc["question"] == "cause"]
+        effect_samples = [doc for doc in self.docs if doc["question"] == "effect"]
+
+        pairs = list(zip(cause_samples, effect_samples))
+ 
+        assert (
+            n <= len(pairs)*2
+        ), f"Error: number of fewshot samples requested exceeds the {len(pairs*2)} that are available."
+
+        fewshot_samples = []
+        for cause_s, effect_s in pairs:
+            fewshot_samples.append(effect_s)
+            if len(fewshot_samples) == n:
+                return fewshot_samples
+            fewshot_samples.append(cause_s)
+            if len(fewshot_samples) == n:
+                return fewshot_samples
+
 
 SAMPLER_REGISTRY = {
     "default": ContextSampler,
     "first_n": FirstNSampler,
+    "causeffect_first_n": CauseEffectFirstNSampler,
 }
 
 
