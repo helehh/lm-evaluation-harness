@@ -1,4 +1,5 @@
 from lm_eval.filters.extraction import Filter
+from lm_eval.api.registry import register_filter
 
 def doc_to_text(doc):
     if doc["question"] == "cause":
@@ -12,7 +13,7 @@ def doc_to_text(doc):
 def doc_to_choice(doc):
     return [doc["choice1"],  doc["choice2"]]
 
-
+@register_filter("remove_quotes")
 class QuotesFilter(Filter):
     """ """
 

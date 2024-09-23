@@ -27,7 +27,7 @@ filter_list:
   - name: "strict-match"
     filter:
       - function: remove_whitespace
-      - function: !function utils.QuotesFilter
+      - function: remove_quotes
       - function: "take_first"
   - name: "quotes-match"
     filter:
