@@ -1,0 +1,4 @@
+group: sib_smugri_cot_group
+group_alias: cot
+task:
+  - sib_smugri_cot

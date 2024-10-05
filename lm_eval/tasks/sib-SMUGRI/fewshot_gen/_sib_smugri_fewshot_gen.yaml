@@ -1,0 +1,4 @@
+group: sib_smugri_fewshot_gen_group
+group_alias: fewshot_gen
+task:
+  - sib_smugri_fewshot_gen
