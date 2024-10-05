@@ -1,0 +1,4 @@
+group: belebele_smugri_cot_group
+group_alias: cot
+task:
+  - belebele_smugri_cot

@@ -1,5 +1,5 @@
-group: belebele_smugri_cot_zero
-
+fewshot_config:
+  sampler: first_n
 output_type: generate_until
 dataset_path: "/gpfs/helios/home/kuulmets/data/belebele-smugri"
 should_decontaminate: true

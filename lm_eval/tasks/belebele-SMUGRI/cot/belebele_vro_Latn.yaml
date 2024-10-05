@@ -4,3 +4,4 @@
 "task": "belebele_vro_Latn_cot_oneshot"
 "test_split": "test"
 "doc_to_text": !function utils.doc_to_text_cot_oneshot_vro
+"tag": "belebele_smugri_cot"

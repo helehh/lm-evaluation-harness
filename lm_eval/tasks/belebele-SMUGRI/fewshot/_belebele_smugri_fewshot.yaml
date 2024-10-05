@@ -1,0 +1,4 @@
+group: belebele_smugri_fewshot_group
+group_alias: fewshot
+task:
+  - belebele_smugri_fewshot

@@ -1,4 +1,3 @@
-group: belebele_smugri_fewshot
 fewshot_config:
   sampler: first_n
 output_type: generate_until
@@ -23,7 +22,7 @@ filter_list:
   - name: "strict-match"
     filter:
       - function: "regex"
-        regex_pattern: "Therefore, the answer is ([ABCD])[.]"
+        regex_pattern: "Therefore, the answer is \"*([ABCD])[.]"
       - function: "take_first"
 metadata:
   version: 1.0

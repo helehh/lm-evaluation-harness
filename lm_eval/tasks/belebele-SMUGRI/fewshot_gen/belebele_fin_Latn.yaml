@@ -3,3 +3,4 @@
 "include": "_fewshot_smugri_gen_yaml"
 "task": "belebele_fin_Latn_fewshot_gen"
 "test_split": "test"
+"tag": "belebele_smugri_fewshot_gen"

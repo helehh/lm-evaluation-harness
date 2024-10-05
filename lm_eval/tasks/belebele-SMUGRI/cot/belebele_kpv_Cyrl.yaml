@@ -3,4 +3,5 @@
 "include": "_cot_fewshot_smugri_yaml"
 "task": "belebele_kpv_Cyrl_cot_oneshot"
 "test_split": "test"
-"doc_to_text": !function utils.doc_to_text_cot_oneshot_liv
+"doc_to_text": !function utils.doc_to_text_cot_oneshot_kpv
+"tag": "belebele_smugri_cot"

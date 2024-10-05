@@ -1,5 +1,6 @@
 "dataset_name": "est_Latn"
 "fewshot_split": "dev"
 "include": "_cot_zero_smugri_yaml"
-"task": "belebele_est_Cyrl_cot_zero"
+"task": "belebele_est_Latn_cot_zero"
 "test_split": "test"
+"tag": "belebele_smugri_cot_zero"

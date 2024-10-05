@@ -1,4 +1,3 @@
-group: belebele_smugri_fewshot
 fewshot_config:
   sampler: first_n
 output_type: generate_until
@@ -25,6 +24,12 @@ filter_list:
     filter:
       - function: "regex"
         regex_pattern: "([ABCD])[.]"
+      - function: "take_first"
+  - name: "first_letter"
+    filter:
+      - function: remove_whitespace
+      - function: "regex"
+        regex_pattern: "^([ABCD])"
       - function: "take_first"
 metadata:
   version: 1.0
