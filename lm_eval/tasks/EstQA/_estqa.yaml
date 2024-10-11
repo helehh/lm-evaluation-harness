@@ -1,0 +1,6 @@
+group: estqa
+group_alias: estqa
+task:
+  - estqa_fewshot_gen
+  - estqa_cot_fewshot
+  - estqa_cot_zero
